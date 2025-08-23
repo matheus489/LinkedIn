@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Automation Pro - Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                    <h2>LinkedIn Automation Pro</h2>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active" data-tab="overview">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Visão Geral</span>
+                    </li>
+                    <li class="nav-item" data-tab="campaigns">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Campanhas</span>
+                    </li>
+                    <li class="nav-item" data-tab="leads">
+                        <i class="fas fa-users"></i>
+                        <span>Leads</span>
+                    </li>
+                    <li class="nav-item" data-tab="connections">
+                        <i class="fas fa-handshake"></i>
+                        <span>Conexões</span>
+                    </li>
+                    <li class="nav-item" data-tab="messages">
+                        <i class="fas fa-envelope"></i>
+                        <span>Mensagens</span>
+                    </li>
+                    <li class="nav-item" data-tab="templates">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Templates</span>
+                    </li>
+                    <li class="nav-item" data-tab="analytics">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </li>
+                    <li class="nav-item" data-tab="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Configurações</span>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Parado</span>
+                </div>
+                <div class="version">v1.0.0</div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <h1 id="page-title">Visão Geral</h1>
+                    <p id="page-description">Dashboard principal da automação do LinkedIn</p>
+                </div>
+                <div class="header-right">
+                    <div class="quick-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="today-connections">0</span>
+                            <span class="stat-label">Conexões Hoje</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="today-messages">0</span>
+                            <span class="stat-label">Mensagens Hoje</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="acceptance-rate">0%</span>
+                            <span class="stat-label">Taxa de Aceitação</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Areas -->
+            <div class="content-area">
+                <!-- Overview Tab -->
+                <div class="tab-content active" id="overview">
+                    <div class="overview-grid">
+                        <!-- Performance Cards -->
+                        <div class="card performance-card">
+                            <div class="card-header">
+                                <h3>Performance Geral</h3>
+                                <div class="card-actions">
+                                    <button class="btn-icon" id="refresh-stats">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="performance-metrics">
+                                    <div class="metric">
+                                        <div class="metric-value" id="total-connections">0</div>
+                                        <div class="metric-label">Total de Conexões</div>
+                                        <div class="metric-change positive">+12% vs semana passada</div>
+                                    </div>
+                                    <div class="metric">
+                                        <div class="metric-value" id="total-messages">0</div>
+                                        <div class="metric-label">Total de Mensagens</div>
+                                        <div class="metric-change positive">+8% vs semana passada</div>
+                                    </div>
+                                    <div class="metric">
+                                        <div class="metric-value" id="response-rate">0%</div>
+                                        <div class="metric-label">Taxa de Resposta</div>
+                                        <div class="metric-change negative">-2% vs semana passada</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="card activity-card">
+                            <div class="card-header">
+                                <h3>Atividade Recente</h3>
+                                <div class="card-actions">
+                                    <button class="btn-text" id="view-all-activity">Ver Todas</button>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="activity-list" id="recent-activity-list">
+                                    <div class="activity-item">
+                                        <div class="activity-icon">
+                                            <i class="fas fa-user-plus"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-title">Conexão enviada</div>
+                                            <div class="activity-details">João Silva - Desenvolvedor na Google</div>
+                                            <div class="activity-time">2 minutos atrás</div>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon">
+                                            <i class="fas fa-envelope"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-title">Mensagem enviada</div>
+                                            <div class="activity-details">Maria Santos - Gerente de Marketing</div>
+                                            <div class="activity-time">15 minutos atrás</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campaign Status -->
+                        <div class="card campaign-status-card">
+                            <div class="card-header">
+                                <h3>Status da Campanha</h3>
+                                <div class="card-actions">
+                                    <button class="btn-primary" id="start-campaign">Iniciar</button>
+                                    <button class="btn-secondary" id="stop-campaign" disabled>Parar</button>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="campaign-info">
+                                    <div class="campaign-name" id="current-campaign-name">Nenhuma campanha ativa</div>
+                                    <div class="campaign-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" id="campaign-progress" style="width: 0%"></div>
+                                        </div>
+                                        <div class="progress-text">
+                                            <span id="campaign-progress-text">0/50 conexões</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="card quick-actions-card">
+                            <div class="card-header">
+                                <h3>Ações Rápidas</h3>
+                            </div>
+                            <div class="card-content">
+                                <div class="quick-actions-grid">
+                                    <button class="quick-action-btn" id="new-campaign-btn">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Nova Campanha</span>
+                                    </button>
+                                    <button class="quick-action-btn" id="export-leads-btn">
+                                        <i class="fas fa-download"></i>
+                                        <span>Exportar Leads</span>
+                                    </button>
+                                    <button class="quick-action-btn" id="scrape-profiles-btn">
+                                        <i class="fas fa-search"></i>
+                                        <span>Extrair Perfis</span>
+                                    </button>
+                                    <button class="quick-action-btn" id="settings-btn">
+                                        <i class="fas fa-cog"></i>
+                                        <span>Configurações</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campaigns Tab -->
+                <div class="tab-content" id="campaigns">
+                    <div class="campaigns-container">
+                        <div class="campaigns-header">
+                            <h2>Gerenciar Campanhas</h2>
+                            <button class="btn-primary" id="create-campaign-btn">
+                                <i class="fas fa-plus"></i>
+                                Nova Campanha
+                            </button>
+                        </div>
+                        
+                        <div class="campaigns-grid" id="campaigns-grid">
+                            <!-- Campaigns will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leads Tab -->
+                <div class="tab-content" id="leads">
+                    <div class="leads-container">
+                        <div class="leads-header">
+                            <h2>Gerenciar Leads</h2>
+                            <div class="leads-actions">
+                                <button class="btn-secondary" id="export-all-leads">
+                                    <i class="fas fa-download"></i>
+                                    Exportar Todos
+                                </button>
+                                <button class="btn-secondary" id="filter-leads">
+                                    <i class="fas fa-filter"></i>
+                                    Filtrar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="leads-table-container">
+                            <table class="leads-table" id="leads-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Cargo</th>
+                                        <th>Empresa</th>
+                                        <th>Status</th>
+                                        <th>Data</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leads-table-body">
+                                    <!-- Leads will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Connections Tab -->
+                <div class="tab-content" id="connections">
+                    <div class="connections-container">
+                        <div class="connections-header">
+                            <h2>Histórico de Conexões</h2>
+                            <div class="connections-filters">
+                                <select id="connection-status-filter">
+                                    <option value="">Todos os Status</option>
+                                    <option value="pending">Pendente</option>
+                                    <option value="accepted">Aceita</option>
+                                    <option value="rejected">Rejeitada</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="connections-table-container">
+                            <table class="connections-table" id="connections-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Cargo</th>
+                                        <th>Empresa</th>
+                                        <th>Status</th>
+                                        <th>Data</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="connections-table-body">
+                                    <!-- Connections will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages Tab -->
+                <div class="tab-content" id="messages">
+                    <div class="messages-container">
+                        <div class="messages-header">
+                            <h2>Histórico de Mensagens</h2>
+                            <div class="messages-actions">
+                                <button class="btn-secondary" id="export-messages">
+                                    <i class="fas fa-download"></i>
+                                    Exportar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="messages-list" id="messages-list">
+                            <!-- Messages will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Templates Tab -->
+                <div class="tab-content" id="templates">
+                    <div class="templates-container">
+                        <div class="templates-header">
+                            <h2>Gerenciar Templates</h2>
+                            <button class="btn-primary" id="create-template-btn">
+                                <i class="fas fa-plus"></i>
+                                Novo Template
+                            </button>
+                        </div>
+                        
+                        <div class="templates-grid" id="templates-grid">
+                            <!-- Templates will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div class="tab-content" id="analytics">
+                    <div class="analytics-container">
+                        <div class="analytics-header">
+                            <h2>Analytics e Relatórios</h2>
+                            <div class="date-range-picker">
+                                <input type="date" id="start-date">
+                                <span>até</span>
+                                <input type="date" id="end-date">
+                                <button class="btn-secondary" id="apply-date-range">Aplicar</button>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-grid">
+                            <div class="card analytics-card">
+                                <div class="card-header">
+                                    <h3>Conexões por Período</h3>
+                                </div>
+                                <div class="card-content">
+                                    <canvas id="connections-chart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="card analytics-card">
+                                <div class="card-header">
+                                    <h3>Taxa de Aceitação</h3>
+                                </div>
+                                <div class="card-content">
+                                    <canvas id="acceptance-chart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="card analytics-card">
+                                <div class="card-header">
+                                    <h3>Melhores Horários</h3>
+                                </div>
+                                <div class="card-content">
+                                    <canvas id="timing-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div class="tab-content" id="settings">
+                    <div class="settings-container">
+                        <div class="settings-header">
+                            <h2>Configurações</h2>
+                        </div>
+                        
+                        <div class="settings-grid">
+                            <div class="card settings-card">
+                                <div class="card-header">
+                                    <h3>Configurações Gerais</h3>
+                                </div>
+                                <div class="card-content">
+                                    <form id="general-settings-form">
+                                        <div class="form-group">
+                                            <label for="max-connections-per-day">Máximo de Conexões por Dia</label>
+                                            <input type="number" id="max-connections-per-day" min="1" max="100" value="50">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="max-messages-per-day">Máximo de Mensagens por Dia</label>
+                                            <input type="number" id="max-messages-per-day" min="1" max="200" value="100">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="auto-cancel-days">Cancelar Convites Após (dias)</label>
+                                            <input type="number" id="auto-cancel-days" min="1" max="30" value="7">
+                                        </div>
+                                        <button type="submit" class="btn-primary">Salvar Configurações</button>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <div class="card settings-card">
+                                <div class="card-header">
+                                    <h3>Horário de Trabalho</h3>
+                                </div>
+                                <div class="card-content">
+                                    <form id="working-hours-form">
+                                        <div class="form-group">
+                                            <label>Horário de Funcionamento</label>
+                                            <div class="time-inputs">
+                                                <input type="time" id="work-start-time" value="09:00">
+                                                <span>a</span>
+                                                <input type="time" id="work-end-time" value="18:00">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Dias de Trabalho</label>
+                                            <div class="weekday-checkboxes">
+                                                <label><input type="checkbox" value="1" checked> Seg</label>
+                                                <label><input type="checkbox" value="2" checked> Ter</label>
+                                                <label><input type="checkbox" value="3" checked> Qua</label>
+                                                <label><input type="checkbox" value="4" checked> Qui</label>
+                                                <label><input type="checkbox" value="5" checked> Sex</label>
+                                                <label><input type="checkbox" value="6"> Sáb</label>
+                                                <label><input type="checkbox" value="0"> Dom</label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn-primary">Salvar Horários</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Modal</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-content" id="modal-content">
+                <!-- Modal content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="dashboard.js"></script>
+</body>
+</html>

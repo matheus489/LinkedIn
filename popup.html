@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Automation Pro</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <img src="icons/icon48.png" alt="Logo" class="logo-img">
+                <h1>LinkedIn Automation Pro</h1>
+            </div>
+            <div class="status-indicator" id="status-indicator">
+                <span class="status-dot"></span>
+                <span class="status-text">Parado</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Overview -->
+            <section class="dashboard-section">
+                <h2>Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-connections">0</div>
+                        <div class="stat-label">Conexões Hoje</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-messages">0</div>
+                        <div class="stat-label">Mensagens Hoje</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="acceptance-rate">0%</div>
+                        <div class="stat-label">Taxa de Aceitação</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="response-rate">0%</div>
+                        <div class="stat-label">Taxa de Resposta</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Campaign Control -->
+            <section class="campaign-section">
+                <h2>Controle de Campanha</h2>
+                <div class="campaign-controls">
+                    <div class="campaign-selector">
+                        <label for="campaign-select">Campanha Ativa:</label>
+                        <select id="campaign-select">
+                            <option value="">Selecione uma campanha</option>
+                        </select>
+                        <button id="new-campaign-btn" class="btn-secondary">Nova Campanha</button>
+                    </div>
+                    
+                    <div class="control-buttons">
+                        <button id="start-btn" class="btn-primary">Iniciar Automação</button>
+                        <button id="stop-btn" class="btn-danger" disabled>Parar Automação</button>
+                        <button id="pause-btn" class="btn-warning" disabled>Pausar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2>Ações Rápidas</h2>
+                <div class="action-buttons">
+                    <button id="scrape-profiles-btn" class="btn-secondary">Extrair Perfis</button>
+                    <button id="export-leads-btn" class="btn-secondary">Exportar Leads</button>
+                    <button id="open-dashboard-btn" class="btn-secondary">Dashboard Completo</button>
+                    <button id="settings-btn" class="btn-secondary">Configurações</button>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="activity-section">
+                <h2>Atividade Recente</h2>
+                <div class="activity-list" id="activity-list">
+                    <div class="activity-item">
+                        <span class="activity-time">Agora</span>
+                        <span class="activity-text">Nenhuma atividade recente</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-info">
+                <span>Versão 1.0.0</span>
+                <span>•</span>
+                <span id="last-update">Última atualização: Agora</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Modal</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-content" id="modal-content">
+                <!-- Modal content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Campaign Modal -->
+    <div id="campaign-modal" class="modal-overlay hidden">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3>Nova Campanha</h3>
+                <button class="modal-close" id="campaign-modal-close">&times;</button>
+            </div>
+            <div class="modal-content">
+                <form id="campaign-form">
+                    <div class="form-group">
+                        <label for="campaign-name">Nome da Campanha:</label>
+                        <input type="text" id="campaign-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="campaign-description">Descrição:</label>
+                        <textarea id="campaign-description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="max-connections">Máx. Conexões/Dia:</label>
+                            <input type="number" id="max-connections" min="1" max="100" value="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="max-messages">Máx. Mensagens/Dia:</label>
+                            <input type="number" id="max-messages" min="1" max="200" value="100">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="connection-delay">Delay entre Conexões (segundos):</label>
+                        <div class="range-inputs">
+                            <input type="number" id="min-connection-delay" min="1" max="30" value="3" placeholder="Mín">
+                            <span>a</span>
+                            <input type="number" id="max-connection-delay" min="1" max="60" value="8" placeholder="Máx">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="follow-up-delay">Delay para Follow-up (dias):</label>
+                        <input type="number" id="follow-up-delay" min="1" max="30" value="2">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Filtros:</label>
+                        <div class="filters-section">
+                            <div class="filter-group">
+                                <label for="company-filter">Empresas (uma por linha):</label>
+                                <textarea id="company-filter" rows="3" placeholder="Ex: Google&#10;Microsoft&#10;Apple"></textarea>
+                            </div>
+                            <div class="filter-group">
+                                <label for="title-filter">Cargos (um por linha):</label>
+                                <textarea id="title-filter" rows="3" placeholder="Ex: Desenvolvedor&#10;Gerente&#10;Diretor"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="connection-template">Template de Conexão:</label>
+                        <textarea id="connection-template" rows="4" placeholder="Olá {{first_name}}, vi seu perfil e gostaria de conectar para expandir nossa rede profissional. Obrigado!"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="follow-up-template">Template de Follow-up:</label>
+                        <textarea id="follow-up-template" rows="4" placeholder="Oi {{first_name}}, obrigado por aceitar minha conexão! Gostaria de saber mais sobre seu trabalho na {{empresa}}."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" id="cancel-campaign" class="btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn-primary">Salvar Campanha</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Configurações</h3>
+                <button class="modal-close" id="settings-modal-close">&times;</button>
+            </div>
+            <div class="modal-content">
+                <form id="settings-form">
+                    <div class="form-group">
+                        <label for="auto-cancel-days">Cancelar convites após (dias):</label>
+                        <input type="number" id="auto-cancel-days" min="1" max="30" value="7">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="working-hours-start">Horário de Trabalho:</label>
+                        <div class="time-inputs">
+                            <input type="time" id="working-hours-start" value="09:00">
+                            <span>a</span>
+                            <input type="time" id="working-hours-end" value="18:00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Dias de Trabalho:</label>
+                        <div class="weekday-checkboxes">
+                            <label><input type="checkbox" value="1" checked> Seg</label>
+                            <label><input type="checkbox" value="2" checked> Ter</label>
+                            <label><input type="checkbox" value="3" checked> Qua</label>
+                            <label><input type="checkbox" value="4" checked> Qui</label>
+                            <label><input type="checkbox" value="5" checked> Sex</label>
+                            <label><input type="checkbox" value="6"> Sáb</label>
+                            <label><input type="checkbox" value="0"> Dom</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="auto-pause-response" checked>
+                            Pausar automaticamente se houver resposta
+                        </label>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" id="cancel-settings" class="btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn-primary">Salvar Configurações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
