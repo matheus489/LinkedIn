@@ -27,6 +27,7 @@ class PopupController {
     // Botões de ação rápida
     document.getElementById('new-campaign-btn').addEventListener('click', () => this.showCampaignModal());
     document.getElementById('scrape-profiles-btn').addEventListener('click', () => this.scrapeProfiles());
+    document.getElementById('view-leads-btn').addEventListener('click', () => this.showLeadsModal());
     document.getElementById('export-leads-btn').addEventListener('click', () => this.exportLeads());
     document.getElementById('open-dashboard-btn').addEventListener('click', () => this.openDashboard());
     document.getElementById('settings-btn').addEventListener('click', () => this.showSettingsModal());
@@ -50,6 +51,11 @@ class PopupController {
     // Modal de campanha
     document.getElementById('campaign-modal-close').addEventListener('click', () => this.hideCampaignModal());
     document.getElementById('cancel-campaign').addEventListener('click', () => this.hideCampaignModal());
+
+    // Modal de leads
+    document.getElementById('leads-modal-close').addEventListener('click', () => this.hideLeadsModal());
+    document.getElementById('refresh-leads-btn').addEventListener('click', () => this.loadLeads());
+    document.getElementById('export-leads-modal-btn').addEventListener('click', () => this.exportLeads());
 
     // Modal de configurações
     document.getElementById('settings-modal-close').addEventListener('click', () => this.hideSettingsModal());
@@ -244,6 +250,106 @@ class PopupController {
 
   hideSettingsModal() {
     document.getElementById('settings-modal').classList.add('hidden');
+  }
+
+  showLeadsModal() {
+    document.getElementById('leads-modal').classList.remove('hidden');
+    this.loadLeads();
+  }
+
+  hideLeadsModal() {
+    document.getElementById('leads-modal').classList.add('hidden');
+  }
+
+  async loadLeads() {
+    try {
+      const result = await chrome.storage.local.get('leads');
+      const leads = result.leads || [];
+      
+      const leadsCount = document.getElementById('leads-count');
+      const tableBody = document.getElementById('leads-table-body');
+      
+      leadsCount.textContent = `${leads.length} leads encontrados`;
+      
+      // Limpar tabela
+      tableBody.innerHTML = '';
+      
+      if (leads.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 40px; color: #666;">
+              Nenhum lead encontrado. Extraia perfis primeiro!
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      // Ordenar leads por data (mais recentes primeiro)
+      leads.sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      // Adicionar leads à tabela
+      leads.forEach((lead, index) => {
+        const row = document.createElement('tr');
+        const date = new Date(lead.date).toLocaleDateString('pt-BR');
+        
+        row.innerHTML = `
+          <td class="lead-name">${lead.name || 'N/A'}</td>
+          <td class="lead-title">${lead.title || 'N/A'}</td>
+          <td class="lead-company">${lead.company || 'N/A'}</td>
+          <td class="lead-date">${date}</td>
+          <td class="lead-actions">
+            <button class="btn-small btn-view" onclick="window.open('${lead.profileUrl}', '_blank')" title="Ver perfil">
+              👁️
+            </button>
+            <button class="btn-small btn-connect" onclick="popupController.connectToLead('${lead.id}')" title="Conectar">
+              🤝
+            </button>
+            <button class="btn-small btn-delete" onclick="popupController.deleteLead('${lead.id}')" title="Excluir">
+              🗑️
+            </button>
+          </td>
+        `;
+        
+        tableBody.appendChild(row);
+      });
+      
+    } catch (error) {
+      console.error('Erro ao carregar leads:', error);
+      this.showNotification('Erro ao carregar leads', 'error');
+    }
+  }
+
+  async connectToLead(leadId) {
+    try {
+      const result = await chrome.storage.local.get('leads');
+      const leads = result.leads || [];
+      const lead = leads.find(l => l.id === leadId);
+      
+      if (lead && lead.profileUrl) {
+        window.open(lead.profileUrl, '_blank');
+        this.showNotification('Perfil aberto em nova aba', 'success');
+      }
+    } catch (error) {
+      console.error('Erro ao conectar com lead:', error);
+      this.showNotification('Erro ao abrir perfil', 'error');
+    }
+  }
+
+  async deleteLead(leadId) {
+    try {
+      const result = await chrome.storage.local.get('leads');
+      let leads = result.leads || [];
+      
+      leads = leads.filter(l => l.id !== leadId);
+      await chrome.storage.local.set({ leads });
+      
+      this.loadLeads(); // Recarregar tabela
+      this.showNotification('Lead removido com sucesso', 'success');
+    } catch (error) {
+      console.error('Erro ao deletar lead:', error);
+      this.showNotification('Erro ao remover lead', 'error');
+    }
   }
 
   async saveCampaign() {

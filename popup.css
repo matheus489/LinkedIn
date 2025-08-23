@@ -305,6 +305,108 @@ button:disabled {
     gap: 8px;
 }
 
+/* Leads Modal Styles */
+.leads-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.leads-stats {
+    font-weight: 600;
+    color: #0077b5;
+}
+
+.leads-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.leads-table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.leads-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.leads-table th {
+    background: #0077b5;
+    color: white;
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.leads-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+}
+
+.leads-table tr:hover {
+    background: #f8f9fa;
+}
+
+.leads-table .lead-name {
+    font-weight: 600;
+    color: #0077b5;
+}
+
+.leads-table .lead-title {
+    color: #666;
+    font-size: 13px;
+}
+
+.leads-table .lead-company {
+    color: #333;
+}
+
+.leads-table .lead-date {
+    color: #999;
+    font-size: 12px;
+}
+
+.leads-table .lead-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.leads-table .btn-small {
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.leads-table .btn-view {
+    background: #0077b5;
+    color: white;
+}
+
+.leads-table .btn-connect {
+    background: #28a745;
+    color: white;
+}
+
+.leads-table .btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
 /* Modals */
 .modal-overlay {
     position: fixed;

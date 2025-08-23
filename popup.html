@@ -70,6 +70,7 @@
                 <h2>Ações Rápidas</h2>
                 <div class="action-buttons">
                     <button id="scrape-profiles-btn" class="btn-secondary">Extrair Perfis</button>
+                    <button id="view-leads-btn" class="btn-secondary">Ver Leads</button>
                     <button id="export-leads-btn" class="btn-secondary">Exportar Leads</button>
                     <button id="open-dashboard-btn" class="btn-secondary">Dashboard Completo</button>
                     <button id="settings-btn" class="btn-secondary">Configurações</button>
@@ -184,6 +185,43 @@
                         <button type="submit" class="btn-primary">Salvar Campanha</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leads Modal -->
+    <div id="leads-modal" class="modal-overlay hidden">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3>Leads Extraídos</h3>
+                <button class="modal-close" id="leads-modal-close">&times;</button>
+            </div>
+            <div class="modal-content">
+                <div class="leads-controls">
+                    <div class="leads-stats">
+                        <span id="leads-count">0 leads encontrados</span>
+                    </div>
+                    <div class="leads-actions">
+                        <button id="refresh-leads-btn" class="btn-secondary">Atualizar</button>
+                        <button id="export-leads-modal-btn" class="btn-primary">Exportar CSV</button>
+                    </div>
+                </div>
+                <div class="leads-table-container">
+                    <table class="leads-table" id="leads-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Cargo</th>
+                                <th>Empresa</th>
+                                <th>Data</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leads-table-body">
+                            <!-- Leads serão inseridos aqui -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

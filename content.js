@@ -661,16 +661,21 @@ if (typeof window.linkedInAutomation === 'undefined') {
     // Aguardar um pouco mais para garantir que o DOM está estável
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    profileCards.forEach((card, index) => {
-      console.log(`Processando card ${index + 1}:`, card);
+    // Processar e salvar cada perfil
+    for (const card of profileCards) {
+      console.log(`Processando card:`, card);
       const profileInfo = this.extractProfileInfo(card);
       if (profileInfo) {
         console.log('Perfil extraído:', profileInfo);
         profiles.push(profileInfo);
+        
+        // Salvar lead no storage
+        await this.saveLead(profileInfo);
+        console.log('Lead salvo no storage:', profileInfo.name);
       } else {
         console.log('Falha ao extrair perfil do card');
       }
-    });
+    }
     
     console.log(`Total de perfis extraídos: ${profiles.length}`);
     return profiles;
@@ -678,20 +683,39 @@ if (typeof window.linkedInAutomation === 'undefined') {
 
   async saveLead(profileInfo) {
     try {
+      console.log('Salvando lead:', profileInfo);
+      
+      // Garantir que o perfil tenha todos os campos necessários
+      const leadData = {
+        id: profileInfo.id || `lead_${Date.now()}_${Math.random()}`,
+        name: profileInfo.name || 'Nome não disponível',
+        title: profileInfo.title || 'Cargo não disponível',
+        company: profileInfo.company || 'Empresa não disponível',
+        profileUrl: profileInfo.profileUrl || '',
+        date: new Date().toISOString(),
+        ...profileInfo
+      };
+      
       const result = await chrome.storage.local.get('leads');
       const leads = result.leads || [];
       
       // Verificar se já existe
-      const existingIndex = leads.findIndex(lead => lead.id === profileInfo.id);
+      const existingIndex = leads.findIndex(lead => lead.id === leadData.id);
       if (existingIndex >= 0) {
-        leads[existingIndex] = { ...leads[existingIndex], ...profileInfo };
+        leads[existingIndex] = { ...leads[existingIndex], ...leadData };
+        console.log('Lead atualizado:', leadData.name);
       } else {
-        leads.push(profileInfo);
+        leads.push(leadData);
+        console.log('Novo lead adicionado:', leadData.name);
       }
       
       await chrome.storage.local.set({ leads });
+      console.log(`Total de leads no storage: ${leads.length}`);
+      
+      return true;
     } catch (error) {
       console.error('Erro ao salvar lead:', error);
+      return false;
     }
   }
 
