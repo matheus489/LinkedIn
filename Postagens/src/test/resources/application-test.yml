@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  
+  h2:
+    console:
+      enabled: false
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.H2Dialect
+
+jwt:
+  secret: testSecretKeyForTestingPurposesOnly
+  expiration: 3600000 # 1 hora em millisegundos
+
+logging:
+  level:
+    com.biblioteca: INFO
+    org.springframework.security: INFO
