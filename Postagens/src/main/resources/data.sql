@@ -1,6 +1,6 @@
 -- Inserir usuário padrão (senha: admin123)
 INSERT INTO usuarios (nome, email, senha, data_criacao) 
-VALUES ('Administrador', 'admin@biblioteca.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDa', CURRENT_TIMESTAMP);
+VALUES ('Administrador', 'admin@biblioteca.com', '$2a$10$m52xciMJq8MeYt2wFD3WDO97G/Q/U34VOx/P5z63MsFM/XKRKnOIi', CURRENT_TIMESTAMP);
 
 -- Inserir autores
 INSERT INTO autores (nome, biografia, data_criacao) 

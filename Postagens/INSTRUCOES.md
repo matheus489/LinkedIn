@@ -175,6 +175,43 @@ spring:
 - Instale o Java 17 ou superior
 - Configure a variável JAVA_HOME
 
+### Erro: "JAVA_HOME not found in your environment"
+Este erro ocorre quando o Maven não consegue encontrar o JDK. Para resolver:
+
+#### Windows (PowerShell)
+```powershell
+# Configurar temporariamente para esta sessão
+$env:JAVA_HOME = "C:\Program Files\Java\jdk-24"
+
+# Configurar permanentemente
+[Environment]::SetEnvironmentVariable("JAVA_HOME", "C:\Program Files\Java\jdk-24", "Machine")
+```
+
+#### Windows (CMD)
+```cmd
+# Configurar temporariamente para esta sessão
+set JAVA_HOME=C:\Program Files\Java\jdk-24
+
+# Configurar permanentemente via Painel de Controle
+# Sistema → Configurações avançadas → Variáveis de Ambiente
+```
+
+#### Linux/Mac
+```bash
+# Configurar temporariamente para esta sessão
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+
+# Configurar permanentemente (adicione ao ~/.bashrc ou ~/.zshrc)
+echo 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk' >> ~/.bashrc
+```
+
+#### Verificar se funcionou
+```bash
+echo $JAVA_HOME  # Linux/Mac
+echo %JAVA_HOME% # Windows CMD
+echo $env:JAVA_HOME  # Windows PowerShell
+```
+
 ### Erro: "Maven não encontrado"
 - Instale o Maven 3.6 ou superior
 - Configure a variável PATH
